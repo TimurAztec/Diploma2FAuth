@@ -1,4 +1,7 @@
-import { Controller, Delete, Get, HttpStatus, Param, Res } from '@nestjs/common';
+import { Controller, Delete, Get, HttpStatus, Param, Res, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -6,6 +9,7 @@ export class UsersController {
 
     constructor(protected userService: UsersService) {}
 
+    @UseGuards(JwtAuthGuard)
     @Get(':id')
     public async findOne(@Res() res, @Param('id') id: number) {
         try {
@@ -19,6 +23,8 @@ export class UsersController {
         }
     }
 
+    @Roles('admin')
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @Get()
     public async findAll(@Res() res) {
         try {
@@ -32,6 +38,8 @@ export class UsersController {
         }
     }
 
+    @Roles('admin')
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @Delete(':id')
     public async delete(@Res() res, @Param('id') id: number) {
         try {

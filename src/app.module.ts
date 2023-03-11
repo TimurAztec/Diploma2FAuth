@@ -19,14 +19,6 @@ import { UsersModule } from './users/users.module';
         uri: `mongodb://${configService.get<string>('DB_USERNAME')}:${configService.get<string>('DB_PASSWORD')}@localhost:27017/diploma2fauth`,
       })
     }),
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-          secret: configService.get<string>('APP_SECRET'),
-          signOptions: { expiresIn: '1d' }
-      })
-    }),
     AuthModule,
     UsersModule,
   ],
