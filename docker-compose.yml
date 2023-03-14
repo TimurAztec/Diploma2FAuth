@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  web:
+    container_name: massage_cabinet_web
+    build: .
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - "./database:/app/database/"
