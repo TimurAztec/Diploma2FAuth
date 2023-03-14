@@ -41,7 +41,7 @@ export class AuthController {
             const tokenReset: I2FTokenReset = await this.authService.get2FToken();
             user.twofasecret = tokenReset.secret.hex;
             await this.userService.create(user);
-            return res.status(HttpStatus.OK).send('<img src="' + tokenReset.qrUrl + '">');
+            return res.status(HttpStatus.OK).json({tokenUrl: tokenReset.qrUrl});
         } catch (error) {
             if (error.status) {
                 return res.status(error.status).json(error.response);

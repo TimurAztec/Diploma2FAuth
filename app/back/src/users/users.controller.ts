@@ -9,7 +9,8 @@ export class UsersController {
 
     constructor(protected userService: UsersService) {}
 
-    @UseGuards(JwtAuthGuard)
+    @Roles('admin')
+    @UseGuards(JwtAuthGuard, RoleGuard)
     @Get(':id')
     public async findOne(@Res() res, @Param('id') id: number) {
         try {
@@ -23,7 +24,7 @@ export class UsersController {
         }
     }
 
-    @Roles('admin')
+    // @Roles('admin')
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Get()
     public async findAll(@Res() res) {

@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../../api/axios";
-import { AuthContext } from "../../guards/AuthGuard";
+import { GlobalContext } from "../../global-context";
 import ErrorNotification from "../../notifications";
 
 function Signin() {
-    const authContext = useContext(AuthContext);
+    const globalContext = useContext(GlobalContext);
     const [token, setToken] = useState('');
     const [formData, setFormData] = useState({
         email: "",
@@ -42,7 +42,7 @@ function Signin() {
         try {
             const response = await API.post('/auth/signin', formData);
             const { accessToken } = response.data;
-            authContext.signin(accessToken);
+            globalContext.signin(accessToken);
             setFormData({
                 email: "",
                 password: "",

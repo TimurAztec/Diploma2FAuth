@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../../api/axios";
-import { AuthContext } from "../../guards/AuthGuard";
+import { GlobalContext } from "../../global-context";
 import ErrorNotification from "../../notifications";
 
 function Signup() {
-    const authContext = useContext(AuthContext);
+    const globalContext = useContext(GlobalContext);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -23,14 +23,14 @@ function Signup() {
         event.preventDefault();
         try {
             const response = await API.post('/auth/signup', formData);
-            const { accessToken } = response.data;
-            authContext.signin(accessToken);
+            const { tokenUrl } = response.data;
             setFormData({
                 name: "",
                 email: "",
                 password: "",
             });
             setError(null);
+            navigate("/resetToken", {state: {tokenUrl}});
         } catch (error) {
             setError(error.response.data.message);
         }
