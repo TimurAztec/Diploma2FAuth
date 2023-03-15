@@ -1,9 +1,11 @@
 import axios from "axios";
-import { request } from "http";
 import { useContext } from "react";
 import { GlobalContext, GlobalContextType } from "../components/global-context";
+
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
+
 export const API = axios.create({
-    baseURL: 'http://localhost:3001'
+    baseURL: baseUrl
 });
 
 API.interceptors.request.use((config: any) => {
