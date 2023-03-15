@@ -1,11 +1,19 @@
 version: "3"
 
 services:
-  web:
-    container_name: massage_cabinet_web
+  app:
+    container_name: diploma2fauth
     build: .
     ports:
       - 8080:8080
     restart: always
+    external_links:
+      - mongo
+
+  mongo:
+    ontainer_name: mongo
+    image: mongo
     volumes:
-      - "./database:/app/database/"
+     - ./db/db
+    ports:
+     - '27012:27017'
