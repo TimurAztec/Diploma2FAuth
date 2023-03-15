@@ -7,13 +7,3 @@ services:
     ports:
       - 8080:8080
     restart: always
-    external_links:
-      - mongo
-
-  mongo:
-    ontainer_name: mongo
-    image: mongo
-    volumes:
-     - ./db/db
-    ports:
-     - '27012:27017'

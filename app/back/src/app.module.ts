@@ -15,7 +15,7 @@ import { UsersModule } from './users/users.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        uri: `mongodb://${configService.get<string>('DB_USERNAME')}:${configService.get<string>('DB_PASSWORD')}@localhost:27017/diploma2fauth`,
+        uri: configService.get<string>('MONGO_DB_URL'),
       })
     }),
     AuthModule,
