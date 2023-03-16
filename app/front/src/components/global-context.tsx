@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { createContext } from 'react';
+import { API } from '../api/axios';
 
 interface GlobalContextType {
     authenticated: boolean;
@@ -26,6 +27,24 @@ function GlobalContextProvider({children}: {children: any}) {
         if (localStorage.getItem("accessToken")) {
             setAuthenticated(true);
         }
+        API.interceptors.request.use((config: any) => {
+            if (localStorage.getItem("accessToken")) {
+                config.headers.Authorization = "Bearer " + localStorage.getItem("accessToken");
+            }
+            return config;
+        }, (error) => {
+            return Promise.reject(error);
+        });
+        
+        API.interceptors.response.use((response: any) => {
+            return response;
+        }, (error) => {
+            if (error.response.status == 401) {
+                signout();
+            }
+            return Promise.reject(error);
+        });
+
         setIsLoaded(true);
     }, []);
 

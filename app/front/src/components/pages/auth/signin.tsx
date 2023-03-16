@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useContext, useEffect, useRef, useState } from 
 import { useNavigate } from "react-router-dom";
 import { API } from "../../../api/axios";
 import { GlobalContext } from "../../global-context";
-import ErrorNotification from "../../notifications";
+import {ErrorNotification} from "../../notifications";
 
 function Signin() {
     const globalContext = useContext(GlobalContext);
@@ -90,8 +90,8 @@ function Signin() {
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
-                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot 2F Token?</a>
+                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => navigate("/forgotPassword")}>Forgot password?</a>
+                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => navigate("/forgotToken")}>Forgot 2F Token?</a>
                                 </div>
                                 <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">

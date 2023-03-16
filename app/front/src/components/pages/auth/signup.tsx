@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useContext, useEffect, useRef, useState } from 
 import { useNavigate } from "react-router-dom";
 import { API } from "../../../api/axios";
 import { GlobalContext } from "../../global-context";
-import ErrorNotification from "../../notifications";
+import {ErrorNotification} from "../../notifications";
 
 function Signup() {
     const globalContext = useContext(GlobalContext);

@@ -7,11 +7,24 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.gmail.com',
+        port: 465,
+        ignoreTLS: true,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: process.env.EMAIL_ID, // generated ethereal user
+          pass: process.env.EMAIL_PASS // generated ethereal password
+        },
+      },
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

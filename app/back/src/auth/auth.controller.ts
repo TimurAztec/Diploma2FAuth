@@ -10,12 +10,14 @@ import { Response } from 'express';
 import { ForgotPasswordDto } from './forgotPassword.dto';
 import { ResetPasswordDto } from './resetPassword.dto';
 import { I2FTokenReset, Role } from './auth.interface';
+import { MailerService } from '@nestjs-modules/mailer';
 
 
 @Controller('auth')
 export class AuthController {
     constructor(protected readonly authService: AuthService,
-                protected readonly userService: UsersService) {}
+                protected readonly userService: UsersService,
+                protected mailerService: MailerService) {}
 
     @Post('signin')
     public async login(@Res() res: Response, @Body() authDto: AuthDto) {
@@ -51,9 +53,16 @@ export class AuthController {
     }
 
     @Post('forgotPassword')
-    public async forgotPasswordPost(@Res() res: Response, @Body() forgotPasswordDto: ForgotPasswordDto) {
+    public async forgotPassword(@Res() res: Response, @Body() forgotPasswordDto: ForgotPasswordDto) {
         try {
             const response = await this.authService.getForgotPasswordLink(forgotPasswordDto);
+            this.mailerService
+                .sendMail({
+                    to: forgotPasswordDto.email,
+                    from: process.env.EMAIL_ID,
+                    subject: 'Password reset',
+                    html: `<a href="${response.link}">password reset link</a>`
+                });
             return res.status(HttpStatus.OK).json(response);
         } catch (error) {
             if (error.status) {
@@ -63,21 +72,8 @@ export class AuthController {
         }
     }
 
-    @Get('forgotPassword/:id')
-    public async forgotPasswordGet(@Res() res: Response, @Param('id') token: string) {
-        try {
-            const response = `<h1>${token}</h1>`
-            return res.status(HttpStatus.OK).send(response);
-        } catch (error) {
-            if (error.status) {
-                return res.status(error.status).json(error.response);
-            }
-            return res.status(HttpStatus.BAD_REQUEST).json(error.message);
-        }
-    }
-
     @Post('forgotPassword/:id')
-    public async ResetPasswordPost(@Res() res: Response, @Body() resetPasswordDto: ResetPasswordDto, @Param('id') token: string) {
+    public async resetPassword(@Res() res: Response, @Body() resetPasswordDto: ResetPasswordDto, @Param('id') token: string) {
         try {
             const response = await this.authService.resetPassword({
                 password: resetPasswordDto.password,
@@ -92,10 +88,17 @@ export class AuthController {
         }
     }
 
-    @Post('forgot2FToken')
+    @Post('forgotToken')
     public async forgotToken(@Res() res: Response, @Body() forgotPasswordDto: ForgotPasswordDto) {
         try {
             const response = await this.authService.getForgotPasswordLink(forgotPasswordDto, true);
+            this.mailerService
+                .sendMail({
+                    to: forgotPasswordDto.email,
+                    from: process.env.EMAIL_ID,
+                    subject: 'Token reset',
+                    html: `<a href="${response.link}">token reset link</a>`
+                });
             return res.status(HttpStatus.OK).json(response);
         } catch (error) {
             if (error.status) {
@@ -105,11 +108,11 @@ export class AuthController {
         }
     }
 
-    @Post('forgot2FToken/:id')
+    @Get('forgotToken/:id')
     public async resetToken(@Res() res: Response, @Param('id') token: string) {
         try {
             const qrUrl = await this.authService.reset2FToken(token);
-            return res.status(HttpStatus.OK).send('<img src="' + qrUrl + '">');
+            return res.status(HttpStatus.OK).json({tokenUrl: qrUrl});
         } catch (error) {
             if (error.status) {
                 return res.status(error.status).json(error.response);

@@ -1,9 +1,22 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { API } from "../../../api/axios";
 
 function TokenQR() {
     const navigate = useNavigate();
     const { state } = useLocation();
-    const { tokenUrl } = state as {tokenUrl: string};
+    const { token } = useParams();
+    const [tokenUrl, setTokenUrl] = useState('');
+
+    useEffect(() => {
+        if (state) {
+            setTokenUrl((state as {tokenUrl: string}).tokenUrl);
+        } else {
+            API.get('/auth/forgotToken/' + token).then((response: any) => {
+                setTokenUrl(response.data.tokenUrl);
+            });
+        }
+    }, []);
 
     const handleSigninClick = async () => {
         navigate("/signin");

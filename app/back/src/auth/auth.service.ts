@@ -10,6 +10,7 @@ import { I2FTokenReset, IAuth, IResetPassword } from './auth.interface';
 import { JwtService } from '@nestjs/jwt';
 const util = require('util');
 import * as QRcode from 'qrcode';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
@@ -40,8 +41,6 @@ export class AuthService {
 
         if (!passwordCheck) throw new NotFoundException('Invalid credentials!');
 
-        console.log(user.twofasecret);
-        console.log(authDto.twofatoken);
         const twofaauthcheck = await speakeasy.totp.verify({ 
             secret: user.twofasecret,
             encoding: 'hex',
@@ -61,7 +60,7 @@ export class AuthService {
         const jwtPayload = {email: user.email}
         const restoreToken = this.jwtService.sign(jwtPayload);
 
-        return {link: `${this.configService.get<string>('DOMAIN')}/auth/forgot${token ? '2FToken' : 'Password'}/${restoreToken}`};
+        return {link: `${this.configService.get<string>('DOMAIN')}/reset${token ? 'Token' : 'Password'}/${restoreToken}`};
     }
 
     public async resetPassword(resetPassord: IResetPassword): Promise<boolean> {

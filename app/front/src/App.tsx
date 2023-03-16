@@ -7,6 +7,8 @@ import { Signin } from './components/pages/auth/signin';
 import { Signup } from './components/pages/auth/signup';
 import { AuthGuard, GlobalContextProvider } from './components/global-context';
 import { TokenQR } from './components/pages/auth/2ftokenqr';
+import { ResetPassword } from './components/pages/auth/reset-password';
+import { ForgotCred } from './components/pages/auth/forgot-cred';
 
 function App(props: any) {
     return (
@@ -16,7 +18,10 @@ function App(props: any) {
                     <Route path={'/'} element={<Navigate to={'/signin'}/>}/>
                     <Route path={'/signin'} element={<Signin/>}/>
                     <Route path={'/signup'} element={<Signup/>}/>
-                    <Route path={'/resetToken'} element={<TokenQR/>}/>
+                    <Route path={'/forgotPassword'} element={<ForgotCred credential='Password'/>}/>
+                    <Route path={'/forgotToken'} element={<ForgotCred credential='Token'/>}/>
+                    <Route path={'/resetPassword/:token'} element={<ResetPassword/>}/>
+                    <Route path={'/resetToken/:token'} element={<TokenQR/>}/>
                     <Route path={'/404'} element={<NotFound/>}/>
                     <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                     <Route element={<AuthGuard/>}>
