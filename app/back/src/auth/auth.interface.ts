@@ -1,11 +1,6 @@
 import { GeneratedSecret } from "speakeasy"
 import { User } from "src/users/user.schema"
 
-export enum Role {
-    Admin = 'admin',
-    Customer = 'customer'
-}
-
 export interface IAuth {
     readonly user: User,
     readonly accessToken: string

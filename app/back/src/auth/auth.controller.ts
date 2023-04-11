@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
-import { CreateUserDto } from 'src/users/user.dto';
+import { CreateUserDto, ReturnUser } from 'src/users/user.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthDto } from './auth.dto';
 import { AuthService } from './auth.service';
@@ -9,8 +9,9 @@ import { User } from 'src/users/user.schema';
 import { Response } from 'express';
 import { ForgotPasswordDto } from './forgotPassword.dto';
 import { ResetPasswordDto } from './resetPassword.dto';
-import { I2FTokenReset, Role } from './auth.interface';
+import { I2FTokenReset } from './auth.interface';
 import { MailerService } from '@nestjs-modules/mailer';
+import { GlobalConstants } from 'src/misc/constants';
 
 
 @Controller('auth')
@@ -23,7 +24,13 @@ export class AuthController {
     public async login(@Res() res: Response, @Body() authDto: AuthDto) {
         try {
             const response = await this.authService.authenticate(authDto);
-            return res.status(HttpStatus.OK).json(response);
+            const returnUser: ReturnUser = {
+                id: response.user._id,
+                email: response.user.email,
+                name: response.user.name,
+                role: response.user.role
+            };
+            return res.status(HttpStatus.OK).json({accessToken: response.accessToken, user: returnUser});
         } catch (error) {
             if (error.status) {
                 return res.status(error.status).json(error.response);
@@ -39,7 +46,7 @@ export class AuthController {
             user.name = createUserDto.name;
             user.email = createUserDto.email;
             user.password = createUserDto.password;
-            user.role = Role.Customer;
+            user.role = GlobalConstants.EMPLOYEE_ROLE;
             const tokenReset: I2FTokenReset = await this.authService.get2FToken();
             user.twofasecret = tokenReset.secret.hex;
             await this.userService.create(user);

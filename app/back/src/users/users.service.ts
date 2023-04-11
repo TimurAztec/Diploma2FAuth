@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ReturnsNewDoc, Types } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 import * as bcrypt from 'bcrypt';
+import { ReturnUser, UpdateUserDto } from './user.dto';
 
 @Injectable()
 export class UsersService {
@@ -46,7 +47,7 @@ export class UsersService {
         return user.save();
     }
 
-    public async findOne(id: number): Promise<User> {
+    public async findOne(id: Types.ObjectId): Promise<User> {
         return await this.model.findById(id).exec();
     }
 
@@ -54,7 +55,7 @@ export class UsersService {
         return await this.model.find().exec();
     }
 
-    public async delete(id: number): Promise<User> {
+    public async delete(id: Types.ObjectId): Promise<User> {
         return await this.model.findByIdAndDelete(id).exec();
     }
 }

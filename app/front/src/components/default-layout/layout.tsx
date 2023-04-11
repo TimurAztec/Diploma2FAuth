@@ -5,6 +5,8 @@ import {Home} from "../pages/home/home";
 import {Footer} from "./footer";
 import {Header} from "./header";
 import { Users } from "../pages/users/users";
+import { Schedule } from "../pages/schedule/schedule";
+import { Inventory } from "../pages/inventory/inventory";
 
 const LayoutContext: any = createContext({});
 
@@ -18,11 +20,12 @@ function DefaultLayout(props: any) {
         }}>
             <div id={'wrapper'}>
                 <Header/>
-                <div className={`h-32`}></div>
                 <Routes>
                     <Route path={'/'} element={<Navigate to={'home'}/>}/>
                     <Route path={'home'} element={<Home/>}/>
-                    <Route path={'users'} element={<Users/>}/>
+                    <Route path={'schedule'} element={<Schedule/>}/>
+                    <Route path={'staff'} element={<Users/>}/>
+                    <Route path={'inventory'} element={<Inventory/>}/>
                     <Route path={'articles'} element={<Home/>}/>
                     <Route path={'/*'} element={<Navigate to={'/404'}/>}/>
                 </Routes>

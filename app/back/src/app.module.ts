@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     }),
     AuthModule,
     UsersModule,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
