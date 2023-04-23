@@ -22,6 +22,7 @@ function App(props: any) {
                     <Route path={'/forgotToken'} element={<ForgotCred credential='Token'/>}/>
                     <Route path={'/resetPassword/:token'} element={<ResetPassword/>}/>
                     <Route path={'/resetToken/:token'} element={<TokenQR/>}/>
+                    <Route path={'/resetToken'} element={<TokenQR/>}/>
                     <Route path={'/404'} element={<NotFound/>}/>
                     <Route path={'*'} element={<Navigate to={'/404'}/>}/>
                     <Route element={<AuthGuard/>}>
