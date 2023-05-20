@@ -5,11 +5,20 @@ import { ErrorNotification } from "../../notifications";
 
 function Users() {
     const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         API.get('/users').then((response: any) => {
             setUsers(response.data);
+        }).catch((error: any) => {
+            setError(error.response.data.message);
+        });
+
+        API.get('/roles').then((response: any) => {
+            setRoles(response.data);
+        }).catch((error: any) => {
+            setError(error.response.data.message);
         });
     }, []);
 
@@ -23,9 +32,9 @@ function Users() {
         }
     };
 
-    const handleRoleChange = async (user: any, newRole: string) => {
+    const handleRoleChange = async (user: any, newRoleId: string) => {
         try {
-            user.role = newRole;
+            user.role = newRoleId;
             await API.post('/users/modify', user);
             API.get('/users').then((response: any) => {
                 setUsers(response.data);
@@ -59,7 +68,7 @@ function Users() {
                         <p className="text-gray-700 text-base mb-2">{item.email}</p>
                         <div className="flex items-center">
                             <p className="text-gray-700 text-base mr-2">
-                            Position: <span className="font-bold">{item.role}</span>
+                                Role: <span className="font-bold">{item.role?.name}</span>
                             </p>
                             <div className="relative inline-block text-left">
                             <div>
@@ -71,13 +80,20 @@ function Users() {
                                 </button>
                             </div>
                             {roleMenuOpenIndex == index && (
-                            <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100" role="menu" aria-orientation="vertical" aria-labelledby="role-menu">
-                                <div className="py-1" role="none">
-                                <button className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900" role="menuitem" onClick={() => handleRoleChange(item, "admin")}>Admin</button>
-                                <button className=" text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900" role="menuitem" onClick={() => handleRoleChange(item, "manager")}>Manager</button>
-                                <button className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900" role="menuitem" onClick={() => handleRoleChange(item, "employee")}>Employee</button>
+                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100" role="menu" aria-orientation="vertical" aria-labelledby="role-menu">
+                                    <div className="py-1" role="none">
+                                    {roles.map((role: any) => (
+                                        <button
+                                        key={role.id}
+                                        className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                                        role="menuitem"
+                                        onClick={() => handleRoleChange(item, role._id)}
+                                        >
+                                        {role.name}
+                                        </button>
+                                    ))}
+                                    </div>
                                 </div>
-                            </div>
                             )}
                         </div>
                         </div>

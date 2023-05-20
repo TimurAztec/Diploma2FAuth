@@ -3,15 +3,16 @@ import { InventoryService } from "./inventory.service";
 import { JwtAuthGuard } from "src/auth/jwt.guard";
 import { Types } from "mongoose";
 import { RoleGuard } from "src/auth/role.guard";
-import { GlobalConstants } from "src/misc/constants";
-import { Roles } from "src/auth/roles.decorator";
 import { ItemDto } from "./item.dto";
+import { Permissions } from "src/auth/permissions.decorator";
+import { GlobalConstants } from "src/misc/constants";
 
 @Controller('inventory')
 export class InventoryController {
 
     constructor(protected inventoryService: InventoryService) {}
 
+    @Permissions(GlobalConstants.Permissions.READ_INVENTORY)
     @UseGuards(JwtAuthGuard)
     @Get(':id')
     public async findOne(@Res() res, @Param('id') id: string) {
@@ -26,6 +27,7 @@ export class InventoryController {
         }
     }
 
+    @Permissions(GlobalConstants.Permissions.READ_INVENTORY)
     @UseGuards(JwtAuthGuard)
     @Get()
     public async findAll(@Res() res) {
@@ -40,7 +42,7 @@ export class InventoryController {
         }
     }
 
-    @Roles(GlobalConstants.SUPER_ADMIN_ROLE, GlobalConstants.ADMIN_ROLE, GlobalConstants.MANAGER_ROLE)
+    @Permissions(GlobalConstants.Permissions.DELETE_INVENTORY)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Delete(':id')
     public async delete(@Res() res, @Param('id') id: number) {
@@ -55,7 +57,7 @@ export class InventoryController {
         }
     }
 
-    @Roles(GlobalConstants.SUPER_ADMIN_ROLE, GlobalConstants.ADMIN_ROLE, GlobalConstants.MANAGER_ROLE)
+    @Permissions(GlobalConstants.Permissions.EDIT_INVENTORY)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Post('modify')
     public async modify(@Res() res, @Body() updateItemDto: ItemDto) {
@@ -73,7 +75,7 @@ export class InventoryController {
         }
     }
 
-    @Roles(GlobalConstants.SUPER_ADMIN_ROLE, GlobalConstants.ADMIN_ROLE, GlobalConstants.MANAGER_ROLE)
+    @Permissions(GlobalConstants.Permissions.EDIT_INVENTORY)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Post()
     public async create(@Res() res, @Body() updateItemDto: ItemDto) {

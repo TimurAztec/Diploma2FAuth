@@ -1,5 +1,7 @@
+import { Type } from "class-transformer";
 import { IsNotEmpty, IsString } from "class-validator";
 import { Types } from "mongoose";
+import { Role } from "src/auth/role.schema";
 
 export class CreateUserDto {
     @IsNotEmpty()
@@ -37,5 +39,5 @@ export interface ReturnUser {
     readonly id: Types.ObjectId;
     readonly email: string;
     readonly name: string;
-    readonly role: string;
+    readonly role: Role;
 }

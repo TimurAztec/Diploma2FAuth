@@ -1,6 +1,7 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { Role } from 'src/auth/role.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -17,8 +18,8 @@ export class User {
   @Prop({required: true})
   password: string;
 
-  @Prop({required: true})
-  role: string;
+  @Prop({ type: Types.ObjectId, ref: 'Role', required: true })
+  role: Role;
 
   @Prop({required: true})
   twofasecret: string;

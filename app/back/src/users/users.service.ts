@@ -11,11 +11,11 @@ export class UsersService {
     constructor(@InjectModel(User.name) private model: Model<UserDocument>) {}
 
     public async findOneByName(name: string): Promise<User> {
-        return await this.model.findOne({name}).exec();
+        return await this.model.findOne({name}).populate('role').lean().exec();
     }
 
     public async findOneByEmail(email: string): Promise<User> {
-        return await this.model.findOne({email}).lean().exec();
+        return await this.model.findOne({email}).populate('role').lean().exec();
     }
 
     public async create(user: User): Promise<User> {
@@ -48,11 +48,11 @@ export class UsersService {
     }
 
     public async findOne(id: Types.ObjectId): Promise<User> {
-        return await this.model.findById(id).exec();
+        return await this.model.findById(id).populate('role').lean().exec();
     }
 
     public async findAll(): Promise<Array<User>> {
-        return await this.model.find().exec();
+        return await this.model.find().populate('role').lean().exec();
     }
 
     public async delete(id: Types.ObjectId): Promise<User> {

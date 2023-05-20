@@ -12,12 +12,14 @@ import { ResetPasswordDto } from './resetPassword.dto';
 import { I2FTokenReset } from './auth.interface';
 import { MailerService } from '@nestjs-modules/mailer';
 import { GlobalConstants } from 'src/misc/constants';
+import { RoleService } from './role.service';
 
 
 @Controller('auth')
 export class AuthController {
     constructor(protected readonly authService: AuthService,
                 protected readonly userService: UsersService,
+                protected readonly rolesService: RoleService,
                 protected mailerService: MailerService) {}
 
     @Post('signin')
@@ -46,7 +48,7 @@ export class AuthController {
             user.name = createUserDto.name;
             user.email = createUserDto.email;
             user.password = createUserDto.password;
-            user.role = GlobalConstants.EMPLOYEE_ROLE;
+            user.role = await this.rolesService.findOneByName(GlobalConstants.Roles.DEFAULT_ROLE);
             const tokenReset: I2FTokenReset = await this.authService.get2FToken();
             user.twofasecret = tokenReset.secret.hex;
             await this.userService.create(user);

@@ -1,13 +1,20 @@
-export class GlobalConstants {
-    public static readonly SUPER_ADMIN_ROLE: string = "super_admin";
-    public static readonly ADMIN_ROLE: string = "admin";
-    public static readonly MANAGER_ROLE: string = "manager";
-    public static readonly EMPLOYEE_ROLE: string = "employee";
+export namespace GlobalConstants {
+    export class Roles {
+        public static readonly DEFAULT_ROLE: string = "default";
+    }
     
-    public static readonly ROLES_VALUES: Map<string, number> = new Map([
-        [GlobalConstants.SUPER_ADMIN_ROLE, 1],
-        [GlobalConstants.ADMIN_ROLE, 2],
-        [GlobalConstants.MANAGER_ROLE, 3],
-        [GlobalConstants.EMPLOYEE_ROLE, 4]
-    ]);
+    export class Permissions {
+        public static readonly READ_SCHEDULE: string = "read_schedule";
+        public static readonly READ_STAFF: string = "read_staff";
+        public static readonly READ_ROLES: string = "read_roles";
+        public static readonly READ_INVENTORY: string = "read_inventory";
+        public static readonly EDIT_SCHEDULE: string = "edit_schedule";
+        public static readonly EDIT_STAFF: string = "edit_staff";
+        public static readonly EDIT_ROLES: string = "edit_roles";
+        public static readonly EDIT_INVENTORY: string = "edit_inventory";
+        public static readonly DELETE_SCHEDULE: string = "delete_schedule";
+        public static readonly DELETE_STAFF: string = "delete_staff";
+        public static readonly DELETE_ROLES: string = "delete_roles";
+        public static readonly DELETE_INVENTORY: string = "delete_inventory";
+    }
 }

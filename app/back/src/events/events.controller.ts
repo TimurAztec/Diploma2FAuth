@@ -3,15 +3,16 @@ import { JwtAuthGuard } from "src/auth/jwt.guard";
 import { Types } from "mongoose";
 import { RoleGuard } from "src/auth/role.guard";
 import { GlobalConstants } from "src/misc/constants";
-import { Roles } from "src/auth/roles.decorator";
 import { EventDto } from "./event.dto";
 import { EventsService } from "./events.service";
+import { Permissions } from "src/auth/permissions.decorator";
 
 @Controller('events')
 export class EventsController {
 
     constructor(protected eventsService: EventsService) {}
 
+    @Permissions(GlobalConstants.Permissions.READ_SCHEDULE)
     @UseGuards(JwtAuthGuard)
     @Get(':id')
     public async findOne(@Res() res, @Param('id') id: string) {
@@ -26,6 +27,7 @@ export class EventsController {
         }
     }
 
+    @Permissions(GlobalConstants.Permissions.READ_SCHEDULE)
     @UseGuards(JwtAuthGuard)
     @Get()
     public async findAll(@Res() res) {
@@ -40,7 +42,7 @@ export class EventsController {
         }
     }
 
-    @Roles(GlobalConstants.SUPER_ADMIN_ROLE, GlobalConstants.ADMIN_ROLE, GlobalConstants.MANAGER_ROLE)
+    @Permissions(GlobalConstants.Permissions.DELETE_SCHEDULE)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Delete(':id')
     public async delete(@Res() res, @Param('id') id: number) {
@@ -55,7 +57,7 @@ export class EventsController {
         }
     }
 
-    @Roles(GlobalConstants.SUPER_ADMIN_ROLE, GlobalConstants.ADMIN_ROLE, GlobalConstants.MANAGER_ROLE)
+    @Permissions(GlobalConstants.Permissions.EDIT_SCHEDULE)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Put()
     public async modify(@Res() res, @Body() updateItemDto: EventDto) {
@@ -73,7 +75,7 @@ export class EventsController {
         }
     }
 
-    // @Roles(GlobalConstants.SUPER_ADMIN_ROLE, GlobalConstants.ADMIN_ROLE, GlobalConstants.MANAGER_ROLE)
+    @Permissions(GlobalConstants.Permissions.EDIT_SCHEDULE)
     @UseGuards(JwtAuthGuard)
     @Post()
     public async create(@Res() res, @Body() updateItemDto: EventDto) {

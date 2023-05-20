@@ -72,6 +72,9 @@ function Header(props: any) {
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/staff")}>
                     Staff
                 </button>
+                <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/roles")}>
+                    Roles
+                </button>
             </nav>
 
             {/* Log Out Button */}
