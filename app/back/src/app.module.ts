@@ -10,6 +10,7 @@ import { join } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { InventoryModule } from './inventory/inventory.module';
 import { EventsModule } from './events/events.module';
+import { ClientsModule } from './clients/client.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { EventsModule } from './events/events.module';
     UsersModule,
     InventoryModule,
     EventsModule,
+    ClientsModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -34,8 +34,8 @@ function Header(props: any) {
         <header className={`bg-gray-900 text-white flex ${menuOpen ? 'flex-col' : ''} justify-between items-center py-4 px-8`}>
             {/* Logo */}
             <div className={`hidden sm:hidden md:flex items-center mt-4`}>
-                <img src="/logo.svg" alt="Logo" className="h-8 w-8 mr-2" />
-                <h1 className="text-xl font-bold">CRM System</h1>
+                {/* <img src="/logo.svg" alt="Logo" className="h-8 w-8 mr-2" /> */}
+                <h1 className="text-xl font-bold">JuliGemCRM System</h1>
             </div>
 
             {/* Mobile menu button */}
@@ -68,6 +68,9 @@ function Header(props: any) {
                 </button>
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/inventory")}>
                     Inventory
+                </button>
+                <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/clients")}>
+                    Clients
                 </button>
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/staff")}>
                     Staff

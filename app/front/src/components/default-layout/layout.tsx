@@ -8,6 +8,7 @@ import { Users } from "../pages/users/users";
 import { Schedule } from "../pages/schedule/schedule";
 import { Inventory } from "../pages/inventory/inventory";
 import { Roles } from "../pages/roles/roles";
+import { Clients } from "../pages/clients/clients";
 
 const LayoutContext: any = createContext({});
 
@@ -27,6 +28,7 @@ function DefaultLayout(props: any) {
                     <Route path={'schedule'} element={<Schedule/>}/>
                     <Route path={'staff'} element={<Users/>}/>
                     <Route path={'inventory'} element={<Inventory/>}/>
+                    <Route path={'clients'} element={<Clients/>}/>
                     <Route path={'roles'} element={<Roles/>}/>
                     <Route path={'articles'} element={<Home/>}/>
                     <Route path={'/*'} element={<Navigate to={'/404'}/>}/>
