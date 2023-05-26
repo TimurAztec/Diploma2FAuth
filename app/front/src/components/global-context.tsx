@@ -2,10 +2,12 @@ import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { createContext } from 'react';
 import { API } from '../api/axios';
+import jwtDecode from 'jwt-decode';
 
 interface GlobalContextType {
     authenticated: boolean;
     isLoaded: boolean;
+    user: any;
     setAuthenticated: Dispatch<SetStateAction<boolean>>;
     signin: (accessToken: string) => void;
     signout: () => void;
@@ -14,6 +16,7 @@ interface GlobalContextType {
 const GlobalContext = createContext<GlobalContextType>({
     authenticated: false,
     isLoaded: false,
+    user: null,
     setAuthenticated: () => {},
     signin: (accessToken: string) => {},
     signout: () => {},
@@ -21,11 +24,14 @@ const GlobalContext = createContext<GlobalContextType>({
 
 function GlobalContextProvider({children}: {children: any}) {
     const [authenticated, setAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
+        const accessToken: string | null = localStorage.getItem("accessToken");
+        if (accessToken) {
             setAuthenticated(true);
+            setUser(jwtDecode(accessToken));
         }
         API.interceptors.request.use((config: any) => {
             if (localStorage.getItem("accessToken")) {
@@ -50,18 +56,20 @@ function GlobalContextProvider({children}: {children: any}) {
 
     const signin = (accessToken: string) => {
         setAuthenticated(true);
+        setUser(jwtDecode(accessToken));
         localStorage.setItem("accessToken", accessToken);
     };
 
     const signout = () => {
         setAuthenticated(false);
+        setUser(null);
         if (localStorage.getItem("accessToken")) {
             localStorage.removeItem("accessToken");
         }
     };
 
     return (
-        <GlobalContext.Provider value={{ authenticated, isLoaded, setAuthenticated, signin, signout }}>
+        <GlobalContext.Provider value={{ authenticated, isLoaded, user, setAuthenticated, signin, signout }}>
             {isLoaded && children}
         </GlobalContext.Provider>
     );
