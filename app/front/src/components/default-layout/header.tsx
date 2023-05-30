@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../global-context";
+import { tr } from "../../i18n";
 
 function Header(props: any) {
     const navigate = useNavigate();
@@ -65,27 +66,27 @@ function Header(props: any) {
             <nav className={`md:flex items-center ${menuOpen ? 'flex flex-col' : 'hidden'}`}>
                 {user?.role?.permissions?.includes('read_schedule') && (
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/schedule")}>
-                    Schedule
+                    {tr('schedule')}
                 </button>
                 )}
                 {user?.role?.permissions?.includes('read_inventory') && (
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/inventory")}>
-                    Inventory
+                    {tr('inventory')}
                 </button>
                 )}
                 {user?.role?.permissions?.includes('read_clients') && (
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/clients")}>
-                    Clients
+                    {tr('clients')}
                 </button>
                 )}
                 {user?.role?.permissions?.includes('read_staff') && (
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/staff")}>
-                    Staff
+                    {tr('staff')}
                 </button>
                 )}
                 {user?.role?.permissions?.includes('read_roles') && (
                 <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75`} onClick={() => handleMenuClick("/d/roles")}>
-                    Roles
+                    {tr('roles')}
                 </button>
                 )}
             </nav>

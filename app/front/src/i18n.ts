@@ -1,4 +1,4 @@
-import i18n from "i18next";
+import i18n, { t } from "i18next";
 import { initReactI18next } from "react-i18next";
 import uaTranslation from './translation/ua-translation.json';
 import enTranslation from './translation/en-translation.json';
@@ -25,4 +25,6 @@ i18n
     }
   });
 
-  export default i18n;
+const tr = (key: string) => t(key) as string || undefined;
+
+  export { i18n, tr };
