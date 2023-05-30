@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Client, ClientDocument } from './client.schema';
-import { CreateClientDto } from './client.dto';
+import { CreateClientDto, UpdateClientDto } from './client.dto';
 
 @Injectable()
 export class ClientsService {
@@ -29,7 +29,7 @@ export class ClientsService {
         return dbresponse;
     }
 
-    public async modify(newClient: Client): Promise<Client> {
+    public async modify(newClient: UpdateClientDto): Promise<Client> {
         const client = await this.model.findById(newClient._id).exec();
         client.email = newClient.email || client.email;
         client.description = newClient.description || client.description;

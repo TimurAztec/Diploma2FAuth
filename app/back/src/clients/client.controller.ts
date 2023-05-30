@@ -77,9 +77,9 @@ export class ClientsController {
     @Post('modify')
     public async modify(@Req() req, @Res() res, @Body() updateClientDto: UpdateClientDto) {
         try {
-            const client = await this.clientsService.findOne(new Types.ObjectId(updateClientDto.id));
+            const client = await this.clientsService.findOne(new Types.ObjectId(updateClientDto._id));
             if (!client) throw new BadRequestException('Client does not exist');
-            const response = await this.clientsService.modify(client);
+            const response = await this.clientsService.modify(updateClientDto);
             return res.status(HttpStatus.OK).json(response);
         } catch (error) {
             if (error.status) {

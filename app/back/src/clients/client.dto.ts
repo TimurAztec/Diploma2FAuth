@@ -20,7 +20,7 @@ export class CreateClientDto {
 export class UpdateClientDto {
     @IsNotEmpty()
     @IsString()
-    readonly id: Types.ObjectId;
+    readonly _id: Types.ObjectId;
 
     @IsString()
     readonly email: string;
