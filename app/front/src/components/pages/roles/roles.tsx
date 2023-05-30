@@ -6,6 +6,7 @@ interface Role {
   _id: string;
   name: string;
   permissions: string[];
+  priority: number;
 }
 
 function Roles() {
@@ -15,6 +16,7 @@ function Roles() {
     const [formData, setFormData] = useState({
         name: '',
         permissions: [] as string[],
+        priority: 0
     });
     const [editingRole, setEditingRole] = useState<null | Role>(null);
 
@@ -80,6 +82,7 @@ function Roles() {
         setFormData({
             name: '',
             permissions: [],
+            priority: 0
         });
         fetchRoles();
         setError(null);
@@ -103,6 +106,7 @@ function Roles() {
         setFormData({
         name: role.name,
         permissions: role.permissions,
+        priority: role.priority
         });
     };
 
@@ -111,6 +115,7 @@ function Roles() {
         setFormData({
         name: '',
         permissions: [],
+        priority: 0
         });
     };
 
@@ -152,6 +157,20 @@ function Roles() {
                     </div>
                 ))}
                 </div>
+                <div className="mb-4">
+                    <label htmlFor="priority" className="block text-gray-700 font-bold mb-2">
+                    Priority
+                    </label>
+                    <input
+                    type="number"
+                    id="priority"
+                    name="priority"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    value={formData.priority}
+                    onChange={handleInputChange}
+                    required={true}
+                    />
+                </div>
                 {editingRole ? (
                 <div className="flex items-center justify-between">
                     <button
@@ -191,6 +210,9 @@ function Roles() {
                             </li>
                         ))}
                         </ul>
+                        <p className="text-gray-700 text-base mb-2">
+                            Priority: {role.priority}
+                        </p>
                     </div>
                     <div className="flex justify-between">
                         <button

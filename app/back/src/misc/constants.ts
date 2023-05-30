@@ -12,6 +12,7 @@ export namespace GlobalConstants {
         public static readonly EDIT_SCHEDULE: string = "edit_schedule";
         public static readonly EDIT_STAFF: string = "edit_staff";
         public static readonly EDIT_ROLES: string = "edit_roles";
+        public static readonly CREATE_ROLES: string = "create_roles";
         public static readonly EDIT_INVENTORY: string = "edit_inventory";
         public static readonly EDIT_CLIENTS: string = "edit_clients";
         public static readonly DELETE_SCHEDULE: string = "delete_schedule";

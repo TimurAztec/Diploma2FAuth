@@ -59,6 +59,11 @@ export class UsersController {
     @Delete(':id')
     public async delete(@Req() req, @Res() res, @Param('id') id: string) {
         try {
+            const userRolePriority: number = req?.user?.role?.priority;
+            const user = await this.userService.findOne(new Types.ObjectId(id));
+            if (userRolePriority <= user?.role?.priority) {
+                throw new BadRequestException('Not enough privilages to edit this!');
+            }
             // const user = await this.userService.findOne(new Types.ObjectId(id));
             // if (req.user && GlobalConstants.Roles.ROLES_VALUES.get(req.user.role.name) >= GlobalConstants.Roles.ROLES_VALUES.get(user.role.name)) {
             //     throw new BadRequestException("You are not priviligiated enough to change this user!");
@@ -78,7 +83,11 @@ export class UsersController {
     @Post('modify')
     public async modify(@Req() req, @Res() res, @Body() updateUserDto: UpdateUserDto) {
         try {
+            const userRolePriority: number = req?.user?.role?.priority;
             const user = await this.userService.findOne(new Types.ObjectId(updateUserDto.id));
+            if (userRolePriority <= user?.role?.priority) {
+                throw new BadRequestException('Not enough privilages to edit this!');
+            }
             // if (req.user && GlobalConstants.Roles.ROLES_VALUES.get(req?.user?.role?.name) >= GlobalConstants.Roles.ROLES_VALUES.get(user?.role?.name)) {
             //     throw new BadRequestException("You are not priviligiated enough to change this user!");
             // }

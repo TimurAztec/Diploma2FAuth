@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsNumberString, IsString } from "class-validator";
 import { Types } from "mongoose";
 
 export class UpdateRoleDto {
@@ -13,6 +13,10 @@ export class UpdateRoleDto {
     @IsNotEmpty()
     @IsString()
     readonly name: string;
+
+    @IsNotEmpty()
+    @IsNumberString()
+    readonly priority: number;
 }
 
 export class RoleDto {
@@ -24,4 +28,8 @@ export class RoleDto {
     @IsNotEmpty()
     @IsString()
     readonly name: string;
+
+    @IsNotEmpty()
+    @IsNumberString()
+    readonly priority: number;
 }

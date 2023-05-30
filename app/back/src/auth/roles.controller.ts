@@ -49,6 +49,11 @@ export class RolesController {
     @Delete(':id')
     public async delete(@Req() req, @Res() res, @Param('id') id: string) {
         try {
+            const userRolePriority: number = req?.user?.role?.priority;
+            const role = await this.rolesService.findOne(new Types.ObjectId(id));
+            if (userRolePriority <= role.priority) {
+                throw new BadRequestException('Not enough privilages to edit this!');
+            }
             const response = await this.rolesService.delete(new Types.ObjectId(id));
             return res.status(HttpStatus.OK).json(response);
         } catch (error) {
@@ -64,8 +69,13 @@ export class RolesController {
     @Put('modify')
     public async modify(@Req() req, @Res() res, @Body() updateRoleDto: UpdateRoleDto) {
         try {
+            const userRolePriority: number = req?.user?.role?.priority;
             const role = await this.rolesService.findOne(new Types.ObjectId(updateRoleDto.id));
+            if (userRolePriority <= role.priority || updateRoleDto.priority >= userRolePriority) {
+                throw new BadRequestException('Not enough privilages to edit this!');
+            }
             role.permissions = updateRoleDto.permissions;
+            role.priority = updateRoleDto.priority;
             role.name = updateRoleDto.name;
             const response = await this.rolesService.modify(role);
             return res.status(HttpStatus.OK).json(response);
@@ -77,11 +87,15 @@ export class RolesController {
         }
     }
 
-    @Permissions(GlobalConstants.Permissions.EDIT_ROLES)
+    @Permissions(GlobalConstants.Permissions.CREATE_ROLES)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @Post()
     public async create(@Req() req, @Res() res, @Body() roleDto: RoleDto) {
         try {
+            const userRolePriority: number = req?.user?.role?.priority;
+            if (roleDto.priority >= userRolePriority) {
+                throw new BadRequestException('Not enough privilages to edit this!');
+            }
             const response = await this.rolesService.create(roleDto);
             return res.status(HttpStatus.OK).json(response);
         } catch (error) {

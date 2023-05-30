@@ -21,6 +21,7 @@ export class RoleService implements OnApplicationBootstrap {
         let dbresponse: Role = await new this.model({
             name: role.name,
             permissions: role.permissions,
+            priority: role.priority,
             createdAt: new Date(),
             updatedAt: new Date()
         }).save();
@@ -31,6 +32,7 @@ export class RoleService implements OnApplicationBootstrap {
         const role = await this.model.findById(newRole._id).exec();
         role.name = newRole.name;
         role.permissions = newRole.permissions;
+        role.priority = newRole.priority;
         role.updatedAt = new Date();
         return role.save();
     }

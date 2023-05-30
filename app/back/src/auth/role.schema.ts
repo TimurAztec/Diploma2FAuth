@@ -11,6 +11,9 @@ export class Role {
   @Prop({required: true})
   name: string;
 
+  @Prop({required: true})
+  priority: number;
+
   @Prop({type: [String], required: true})
   permissions: string[];
 
