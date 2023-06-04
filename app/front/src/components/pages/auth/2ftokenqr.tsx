@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API } from "../../../api/axios";
+import { tr } from "../../../i18n";
 
 function TokenQR() {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ function TokenQR() {
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                Please scan this QR code with Google Authenticator app on your phone
+                                {tr('please scan this QR code with Google Authenticator app on your phone')}
                             </h1>
                             <div className="space-y-4 md:space-y-6">
                                 <img
@@ -38,9 +39,9 @@ function TokenQR() {
                                     className="mx-auto w-full h-auto max-w-xs object-contain"
                                 />
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                    and Sign In using 2F Token in app
+                                    {tr('trand Sign In using 2F Token in app')}
                                 </p>
-                                <button onClick={handleSigninClick} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                                <button onClick={handleSigninClick} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{tr('sign in')}</button>
                             </div>
                         </div>
                     </div>

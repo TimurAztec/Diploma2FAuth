@@ -116,10 +116,14 @@ function Schedule() {
                   style={{ height: "75vh" }}
                   onSelectEvent={handleEventSelect}
               />
-              <form onSubmit={handleSubmit} id="event-form" className="col-span-1 grid grid-cols-2 gap-4 p-6 bg-white rounded-lg shadow-md border border-gray-300">
+              <form onSubmit={handleSubmit} id="event-form" className="col-span-1 flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md border border-gray-300">
                 <div>
                   <label htmlFor="title">Title</label>
-                  <input type="text" name="title" id="title" value={formData.title} onChange={handleInputChange} className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                  <input type="text" name="title" id="title" value={formData.title} onChange={handleInputChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+                <div>
+                  <label htmlFor="location">Location</label>
+                  <input type="text" name="location" id="location" value={formData.location} onChange={handleInputChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
                 <div>
                   <label htmlFor="start">Start</label>
@@ -130,12 +134,8 @@ function Schedule() {
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     dateFormat="MMMM d, yyyy h:mm aa"
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
-                </div>
-                <div>
-                  <label htmlFor="location">Location</label>
-                  <input type="text" name="location" id="location" value={formData.location} onChange={handleInputChange} className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                 </div>
                 <div>
                   <label htmlFor="end">End</label>
@@ -145,13 +145,14 @@ function Schedule() {
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
+                    minDate={formData.start}
                     dateFormat="MMMM d, yyyy h:mm aa"
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
                 <div>
                   <label htmlFor="description">Description</label>
-                  <textarea name="description" id="description" value={formData.description} onChange={handleInputChange} className="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                  <textarea name="description" id="description" value={formData.description} onChange={handleInputChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
                 <div className="col-span-2">
                 {selectedEvent ? (

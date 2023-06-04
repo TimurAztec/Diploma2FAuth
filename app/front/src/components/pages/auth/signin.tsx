@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../../api/axios";
 import { GlobalContext } from "../../global-context";
 import {ErrorNotification} from "../../notifications";
+import { tr } from "../../../i18n";
 
 function Signin() {
     const globalContext = useContext(GlobalContext);
@@ -27,8 +28,13 @@ function Signin() {
             formData.twofatoken = newToken;
             return newToken;
         });
-        if (value && index < 5) {
-            if (tokenInputRefs[index + 1].current) {
+        if (!value && index > 0) {
+            if (tokenInputRefs[index - 1]?.current) {
+                //@ts-ignore
+                tokenInputRefs[index - 1].current.focus();
+            }
+        } else if (value && index < 5) {
+            if (tokenInputRefs[index + 1]?.current) {
                 //@ts-ignore
                 tokenInputRefs[index + 1].current.focus();
             }
@@ -67,35 +73,35 @@ function Signin() {
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                Sign in to your account
+                                {tr('sign in to your account')}
                             </h1>
                             <form className="space-y-4 md:space-y-6" action="#" onSubmit={handleSubmit}>
                                 <div>
-                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{tr('your')} email</label>
                                     <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@domain.com" value={formData.email} onChange={handleInputChange} required={true}/>
                                 </div>
                                 <div>
-                                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                    <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{tr('your')} {tr('password')}</label>
                                     <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={formData.password} onChange={handleInputChange} required={true}/>
                                 </div>
                                 <div>
-                                    <label htmlFor="2Ftoken" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">2F Token</label>
+                                    <label htmlFor="2Ftoken" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">2F {tr('token')}</label>
                                     <div className="flex space-x-2">
-                                        <input type="text" className="w-12 h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[0] || ''} onChange={(event) => handleTokenChange(event, 0)} ref={tokenInputRefs[0]} required={true}/>
-                                        <input type="text" className="w-12 h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[1] || ''} onChange={(event) => handleTokenChange(event, 1)} ref={tokenInputRefs[1]} required={true}/>
-                                        <input type="text" className="w-12 h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[2] || ''} onChange={(event) => handleTokenChange(event, 2)} ref={tokenInputRefs[2]} required={true}/>
-                                        <input type="text" className="w-12 h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[3] || ''} onChange={(event) => handleTokenChange(event, 3)} ref={tokenInputRefs[3]} required={true}/>
-                                        <input type="text" className="w-12 h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[4] || ''} onChange={(event) => handleTokenChange(event, 4)} ref={tokenInputRefs[4]} required={true}/>
-                                        <input type="text" className="w-12 h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[5] || ''} onChange={(event) => handleTokenChange(event, 5)} ref={tokenInputRefs[5]} required={true}/>
+                                        <input type="text" className="w-full h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[0] || ''} onChange={(event) => handleTokenChange(event, 0)} ref={tokenInputRefs[0]} required={true}/>
+                                        <input type="text" className="w-full h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[1] || ''} onChange={(event) => handleTokenChange(event, 1)} ref={tokenInputRefs[1]} required={true}/>
+                                        <input type="text" className="w-full h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[2] || ''} onChange={(event) => handleTokenChange(event, 2)} ref={tokenInputRefs[2]} required={true}/>
+                                        <input type="text" className="w-full h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[3] || ''} onChange={(event) => handleTokenChange(event, 3)} ref={tokenInputRefs[3]} required={true}/>
+                                        <input type="text" className="w-full h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[4] || ''} onChange={(event) => handleTokenChange(event, 4)} ref={tokenInputRefs[4]} required={true}/>
+                                        <input type="text" className="w-full h-12 text-center border-gray-300 border-2 rounded-md" maxLength={1} value={token[5] || ''} onChange={(event) => handleTokenChange(event, 5)} ref={tokenInputRefs[5]} required={true}/>
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => navigate("/forgotPassword")}>Forgot password?</a>
-                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => navigate("/forgotToken")}>Forgot 2F Token?</a>
+                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => navigate("/forgotPassword")}>{tr('forgot')} {tr('password')}?</a>
+                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500" onClick={() => navigate("/forgotToken")}>{tr('forgot')} 2F {tr('token')}?</a>
                                 </div>
-                                <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
+                                <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{tr('sign in')}</button>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                    Don’t have an account yet? <a href="#" onClick={handleSignupClick} className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                                    {tr('don’t have an account yet')}? <a href="#" onClick={handleSignupClick} className="font-medium text-primary-600 hover:underline dark:text-primary-500">{tr('sign up')}</a>
                                 </p>
                             </form>
                         </div>
