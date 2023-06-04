@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../global-context";
 import { tr } from "../../i18n";
+import { useTranslation } from "react-i18next";
 
 function Header(props: any) {
     const navigate = useNavigate();
     const {authenticated, user, signout} = useContext(GlobalContext);
     const [menuOpen, setMenuOpen] = useState(false);
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         const handleOrientationChange = () => {
@@ -31,12 +33,34 @@ function Header(props: any) {
         setMenuOpen(false);
     };
 
+    const changeLanguage = (language: string) => {
+        i18n.changeLanguage(language);
+    };
+
     return (
         <header className={`bg-gray-900 text-white flex ${menuOpen ? 'flex-col' : ''} justify-between items-center py-4 px-8`}>
             {/* Logo */}
-            <div className={`hidden sm:hidden md:flex items-center mt-4`}>
+            <div className="flex flex-col items-center mt-4">
+            <div className="flex items-center mb-2">
                 {/* <img src="/logo.svg" alt="Logo" className="h-8 w-8 mr-2" /> */}
                 <h1 className="text-xl font-bold">JuliGemCRM System</h1>
+            </div>
+            <div className="flex space-x-4">
+                <button
+                className="language-button bg-transparent border-none text-2xl focus:outline-none transform transition hover:scale-110"
+                onClick={() => changeLanguage('en')}
+                title="English"
+                >
+                🇺🇸
+                </button>
+                <button
+                className="language-button bg-transparent border-none text-2xl focus:outline-none transform transition hover:scale-110"
+                onClick={() => changeLanguage('ua')}
+                title="Українська"
+                >
+                🇺🇦
+                </button>
+            </div>
             </div>
 
             {/* Mobile menu button */}
