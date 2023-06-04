@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { API } from '../../../api/axios';
 import { ErrorNotification } from '../../notifications';
+import { tr } from '../../../i18n';
 
 interface Role {
   _id: string;
@@ -16,7 +17,7 @@ function Roles() {
     const [formData, setFormData] = useState({
         name: '',
         permissions: [] as string[],
-        priority: 0
+        priority: 1
     });
     const [editingRole, setEditingRole] = useState<null | Role>(null);
 
@@ -82,7 +83,7 @@ function Roles() {
         setFormData({
             name: '',
             permissions: [],
-            priority: 0
+            priority: 1
         });
         fetchRoles();
         setError(null);
@@ -115,7 +116,7 @@ function Roles() {
         setFormData({
         name: '',
         permissions: [],
-        priority: 0
+        priority: 1
         });
     };
 
@@ -127,7 +128,7 @@ function Roles() {
             <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto">
                 <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
-                    Name
+                    {tr('Title')}
                 </label>
                 <input
                     type="text"
@@ -140,7 +141,7 @@ function Roles() {
                 />
                 </div>
                 <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2">Permissions</label>
+                <label className="block text-gray-700 font-bold mb-2">{tr('Permissions')}</label>
                 {permissions.map((permission) => (
                     <div key={permission} className="flex items-center">
                         <input
@@ -159,7 +160,7 @@ function Roles() {
                 </div>
                 <div className="mb-4">
                     <label htmlFor="priority" className="block text-gray-700 font-bold mb-2">
-                    Priority
+                    {tr('Priority')}
                     </label>
                     <input
                     type="number"
@@ -167,6 +168,7 @@ function Roles() {
                     name="priority"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     value={formData.priority}
+                    min={1}
                     onChange={handleInputChange}
                     required={true}
                     />
@@ -177,13 +179,13 @@ function Roles() {
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
-                    Update Role
+                    {tr('update')}
                     </button>
                     <button
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     onClick={handleNotEdit}
                     >
-                    Cancel Edit
+                    {tr('notupdate')}
                     </button>
                 </div>
                 ) : (
@@ -192,7 +194,7 @@ function Roles() {
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
-                    Create Role
+                    {tr('create')}
                     </button>
                 </div>
                 )}
@@ -219,13 +221,13 @@ function Roles() {
                         onClick={() => handleEdit(role)}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
-                        Edit
+                        {tr('edit')}
                         </button>
                         <button
                         onClick={() => handleRemove(role._id)}
                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                         >
-                        Remove
+                        {tr('remove')}
                         </button>
                     </div>
                 </div>

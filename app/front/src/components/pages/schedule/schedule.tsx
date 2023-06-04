@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { API } from "../../../api/axios";
 import { ErrorNotification } from "../../notifications";
 import DatePicker from "react-datepicker";
+import { tr } from "../../../i18n";
 
 export interface CustomEvent {
   allDay?: boolean | undefined;
@@ -118,15 +119,15 @@ function Schedule() {
               />
               <form onSubmit={handleSubmit} id="event-form" className="col-span-1 flex flex-col gap-4 p-6 bg-white rounded-lg shadow-md border border-gray-300">
                 <div>
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="title">{tr('Title')}</label>
                   <input type="text" name="title" id="title" value={formData.title} onChange={handleInputChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
                 <div>
-                  <label htmlFor="location">Location</label>
+                  <label htmlFor="location">{tr('Location')}</label>
                   <input type="text" name="location" id="location" value={formData.location} onChange={handleInputChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
                 <div>
-                  <label htmlFor="start">Start</label>
+                  <label htmlFor="start">{tr('Start')}</label>
                   <DatePicker
                     selected={formData.start}
                     onChange={(date) => handleInputChange({ target: { name: "start", value: date } })}
@@ -138,7 +139,7 @@ function Schedule() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="end">End</label>
+                  <label htmlFor="end">{tr('End')}</label>
                   <DatePicker
                     selected={formData.end}
                     onChange={(date) => handleInputChange({ target: { name: "end", value: date } })}
@@ -151,23 +152,23 @@ function Schedule() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="description">Description</label>
+                  <label htmlFor="description">{tr('description')}</label>
                   <textarea name="description" id="description" value={formData.description} onChange={handleInputChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
                 <div className="col-span-2">
                 {selectedEvent ? (
                   <>
-                  <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">Update Event</button>
+                  <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">{tr('update')}</button>
                   <button
                     className="w-full text-white rounded-md px-4 py-2 mt-4 focus:outline-none focus:bg-indigo-600 bg-red-600 hover:bg-red-700"
                     onClick={() => {setSelectedEvent(null)}}>
-                    Do not update item
+                    {tr('notupdate')}
                   </button>
                   </>
                 ) : (
-                  <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">Add Event</button>
+                  <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">{tr('create')}</button>
                 )}
-                  <button type="button" className="w-full bg-red-600 text-white rounded-md px-4 mt-4 py-2 hover:bg-red-700 focus:outline-none focus:bg-indigo-600" onClick={handleDeleteEvent}>Delete</button>
+                  <button type="button" className="w-full bg-red-600 text-white rounded-md px-4 mt-4 py-2 hover:bg-red-700 focus:outline-none focus:bg-indigo-600" onClick={handleDeleteEvent}>{tr('remove')}</button>
                 </div>
               </form>
           </section>

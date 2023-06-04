@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import { API } from "../../../api/axios";
 import CustomList from "../../props-list";
 import { ErrorNotification } from "../../notifications";
+import { tr } from "../../../i18n";
 
 function Users() {
     const [users, setUsers] = useState([]);
@@ -68,12 +69,12 @@ function Users() {
                         <p className="text-gray-700 text-base mb-2">{item.email}</p>
                         <div className="flex items-center">
                             <p className="text-gray-700 text-base mr-2">
-                                Role: <span className="font-bold">{item.role?.name}</span>
+                                {tr('Role')}: <span className="font-bold">{item.role?.name}</span>
                             </p>
                             <div className="relative inline-block text-left">
                             <div>
                                 <button className="flex items-center justify-between w-full border border-gray-300 rounded-md shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="role-menu" aria-haspopup="true" aria-expanded={roleMenuOpenIndex == index ? "true" : "false"} onClick={() => handleRoleMenuClick(index)}>
-                                Change Role
+                                {tr('Change role')}
                                 <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fillRule="evenodd" d="M6.293 6.293a1 1 0 0 1 1.414 0L10 8.586l2.293-2.293a1 1 0 1 1 1.414 1.414L11.414 10l2.293 2.293a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 0-1.414z" clipRule="evenodd" />
                                 </svg>
@@ -98,7 +99,7 @@ function Users() {
                         </div>
                         </div>
                         <button onClick={() => handleRemove(item.id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                            Remove
+                            {tr('remove')}
                         </button>
                     </div>
                     </div>

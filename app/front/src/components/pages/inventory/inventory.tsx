@@ -2,6 +2,7 @@ import {FormEvent, useEffect, useState} from "react";
 import { API } from "../../../api/axios";
 import CustomList from "../../props-list";
 import { ErrorNotification } from "../../notifications";
+import { tr } from "../../../i18n";
 
 function Inventory() {
     const [items, setItems] = useState([]);
@@ -96,7 +97,7 @@ function Inventory() {
                 <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto">
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
-                        Name
+                        {tr('Title')}
                         </label>
                         <input
                         type="text"
@@ -110,7 +111,7 @@ function Inventory() {
                     </div>
                     <div className="mb-4">
                         <label htmlFor="quantity" className="block text-gray-700 font-bold mb-2">
-                        Quantity
+                        {tr('Quantity')}
                         </label>
                         <input
                         type="number"
@@ -124,7 +125,7 @@ function Inventory() {
                     </div>
                     <div className="mb-6">
                         <label htmlFor="location" className="block text-gray-700 font-bold mb-2">
-                        Location
+                        {tr('Location')}
                         </label>
                         <input
                         type="text"
@@ -142,12 +143,12 @@ function Inventory() {
                             type="submit"
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
-                            Update Item
+                            {tr('update')}
                             </button>
                             <button
                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             onClick={handleNotEdit}>
-                            Do not update item
+                            {tr('notupdate')}
                             </button>
                         </div>
                     ) : (
@@ -156,7 +157,7 @@ function Inventory() {
                             type="submit"
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
-                            Create Item
+                            {tr('create')}
                             </button>
                         </div>
                     ) 
@@ -173,10 +174,10 @@ function Inventory() {
                         </div>
                         <div className="flex justify-between">
                             <button onClick={() => handleEdit(item)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Edit
+                            {tr('edit')}
                             </button>
                             <button onClick={() => handleRemove(item._id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                            Remove
+                            {tr('remove')}
                             </button>
                         </div>
                     </div>

@@ -23,7 +23,7 @@ function DefaultLayout(props: any) {
             <div id={'wrapper'}>
                 <Header/>
                 <Routes>
-                    <Route path={'/'} element={<Navigate to={'home'}/>}/>
+                    <Route path={'/'} element={<Navigate to={'schedule'}/>}/>
                     <Route path={'home'} element={<Home/>}/>
                     <Route path={'schedule'} element={<Schedule/>}/>
                     <Route path={'staff'} element={<Users/>}/>

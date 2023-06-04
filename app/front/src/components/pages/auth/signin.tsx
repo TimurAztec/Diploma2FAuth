@@ -55,7 +55,7 @@ function Signin() {
                 twofatoken: ""
             });
             setError(null);
-            navigate("/d/home");
+            navigate("/d/schedule");
         } catch (error) {
             setError(error.response.data.message);
         }

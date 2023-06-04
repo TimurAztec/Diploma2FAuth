@@ -95,7 +95,7 @@ function Header(props: any) {
             {authenticated &&
                 <div className="flex items-center">
                     <button className={`text-white font-medium px-4 py-2 rounded-lg ${menuOpen ? 'mt-2' : 'mr-4'} bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-75`} onClick={() => { signout(); handleMenuClick("/signin") }}>
-                        Log Out
+                        {tr('Log Out')}
                     </button>
                 </div>
             }
@@ -107,13 +107,13 @@ function Header(props: any) {
                         className="text-white font-medium px-4 py-2 rounded-lg mr-4 bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-75"
                         onClick={() => handleMenuClick("/signin")}
                     >
-                        Sign In
+                        {tr('sign in')}
                     </button>
                     <button
                         className="text-primary-600 font-medium px-4 py-2 rounded-lg border border-primary-600 hover:text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-75"
                         onClick={() => handleMenuClick("/signup")}
                     >
-                        Sign Up
+                        {tr('sign up')}
                     </button>
                 </div>
             )}

@@ -2,6 +2,7 @@ import {FormEvent, useEffect, useState} from "react";
 import { API } from "../../../api/axios";
 import CustomList from "../../props-list";
 import { ErrorNotification } from "../../notifications";
+import { tr } from "../../../i18n";
 
 function Clients() {
     const [items, setItems] = useState([]);
@@ -102,7 +103,7 @@ function Clients() {
                 <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto">
                 <div className="mb-4">
                     <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
-                        Name
+                        {tr('Name')}
                     </label>
                     <input
                         type="text"
@@ -129,7 +130,7 @@ function Clients() {
                 </div>
                 <div className="mb-4">
                     <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">
-                        Phone
+                        {tr('phone')}
                     </label>
                     <input
                         type="tel"
@@ -143,7 +144,7 @@ function Clients() {
                 </div>
                 <div className="mb-6">
                     <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
-                        Description
+                        {tr('description')}
                     </label>
                     <textarea
                         id="description"
@@ -159,12 +160,12 @@ function Clients() {
                             type="submit"
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
-                            Update client
+                            {tr('update')}
                             </button>
                             <button
                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             onClick={handleNotEdit}>
-                            Do not update client
+                            {tr('notupdate')}
                             </button>
                         </div>
                     ) : (
@@ -173,7 +174,7 @@ function Clients() {
                             type="submit"
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                             >
-                            Create Client
+                            {tr('create')}
                             </button>
                         </div>
                     ) 
@@ -190,20 +191,20 @@ function Clients() {
                                 <p className="ml-4">{item.email}</p>
                             </div>
                             <div className="grid grid-cols-2">
-                                <strong className="font-bold">Phone:</strong>
+                                <strong className="font-bold">{tr('phone')}:</strong>
                                 <p className="ml-4">{item.phone}</p>
                             </div>
                             <div className="grid grid-cols-2">
-                                <strong className="font-bold">Description:</strong>
+                                <strong className="font-bold">{tr('description')}:</strong>
                                 <p className="ml-4">{item.description}</p>
                             </div>
                         </div>
                         <div className="flex justify-between mt-2">
                             <button onClick={() => handleEdit(item)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Edit
+                            {tr('edit')}
                             </button>
                             <button onClick={() => handleRemove(item._id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                            Remove
+                            {tr('remove')}
                             </button>
                         </div>
                     </div>
