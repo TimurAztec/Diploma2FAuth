@@ -55,6 +55,7 @@ export class RoleService implements OnApplicationBootstrap {
             const defaultRole = new this.model({
                 name: GlobalConstants.Roles.DEFAULT_ROLE,
                 permissions: [GlobalConstants.Permissions.READ_SCHEDULE],
+                priority: 1,
                 createdAt: new Date(), 
                 updatedAt: new Date()
             });
