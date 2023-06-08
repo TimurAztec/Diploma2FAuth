@@ -34,13 +34,14 @@
     "sign in to your account": "Увійдіть до профілю",
     "enter your": "Введіть ваш",
     "don’t have an account yet": "Немає профілю",
-    "send reset link": "Відправити посилання на зміну",
+    "send reset link": "Відправити посилання для зміни даних",
     "already have an account": "Вже є профіль",
     "forgot": "Забули",
     "confirm": "Підтвердіть",
     "token": "токен",
     "reset your password": "Відновіть ваш пароль",
     "reset": "Відновіть",
+    "search": "Пошук...",
     "please scan this QR code with Google Authenticator app on your phone": "Будь ласка, відскануйте цей QR-код за допомогою програми Google Authenticator на своєму телефоні",
     "and Sign In using 2F Token in app": "та увійдіть за допомогою 2F Token у додатку"
 }

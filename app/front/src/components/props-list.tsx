@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { tr } from "../i18n";
 
 interface PropsList {
   items: any[];
@@ -22,7 +23,7 @@ const CustomList: React.FC<PropsList> = ({ items, renderItem }) => {
       <input
         className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
         type="text"
-        placeholder="Search"
+        placeholder={tr('search')}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
