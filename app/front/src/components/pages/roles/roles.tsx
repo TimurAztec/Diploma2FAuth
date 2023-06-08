@@ -2,6 +2,7 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { API } from '../../../api/axios';
 import { ErrorNotification } from '../../notifications';
 import { tr } from '../../../i18n';
+import PermissionsList from './permissions-list';
 
 interface Role {
   _id: string;
@@ -141,22 +142,7 @@ function Roles() {
                 />
                 </div>
                 <div className="mb-4">
-                <label className="block text-gray-700 font-bold mb-2">{tr('Permissions')}</label>
-                {permissions.map((permission) => (
-                    <div key={permission} className="flex items-center">
-                        <input
-                            type="checkbox"
-                            id={permission}
-                            name="permissions"
-                            value={permission}
-                            checked={formData.permissions.includes(permission)}
-                            onChange={handlePermissionChange}
-                        />
-                        <label htmlFor={permission} className="ml-2 text-gray-700">
-                            {permission}
-                        </label>
-                    </div>
-                ))}
+                    <PermissionsList permissions={permissions} permissionsData={formData.permissions} handlePermissionChange={handlePermissionChange}/>
                 </div>
                 <div className="mb-4">
                     <label htmlFor="priority" className="block text-gray-700 font-bold mb-2">
@@ -205,15 +191,9 @@ function Roles() {
                 <div key={role._id} className="bg-white rounded-lg shadow-lg p-4 mb-4">
                     <div>
                         <h2 className="font-bold text-xl mb-2">{role.name}</h2>
-                        <ul className="list-disc pl-6">
-                        {role.permissions.map((permission) => (
-                            <li key={permission} className="text-gray-700 text-base mb-2">
-                            {permission}
-                            </li>
-                        ))}
-                        </ul>
+                        <PermissionsList permissions={permissions} permissionsData={role.permissions}/>
                         <p className="text-gray-700 text-base mb-2">
-                            Priority: {role.priority}
+                            {tr('Priority')}: {role.priority}
                         </p>
                     </div>
                     <div className="flex justify-between">

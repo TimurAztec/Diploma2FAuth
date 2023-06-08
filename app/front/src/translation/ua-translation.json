@@ -43,5 +43,7 @@
     "reset": "Відновіть",
     "search": "Пошук...",
     "please scan this QR code with Google Authenticator app on your phone": "Будь ласка, відскануйте цей QR-код за допомогою програми Google Authenticator на своєму телефоні",
-    "and Sign In using 2F Token in app": "та увійдіть за допомогою 2F Token у додатку"
+    "and Sign In using 2F Token in app": "та увійдіть за допомогою 2F Token у додатку",
+    "Show": "Показати",
+    "Hide": "Приховати"
 }
