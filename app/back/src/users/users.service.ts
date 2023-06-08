@@ -4,11 +4,15 @@ import { Model, ReturnsNewDoc, Types } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 import * as bcrypt from 'bcrypt';
 import { ReturnUser, UpdateUserDto } from './user.dto';
+import { GlobalConstants } from 'src/misc/constants';
+import { Role } from 'src/auth/role.schema';
+import { RoleService } from 'src/auth/role.service';
 
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectModel(User.name) private model: Model<UserDocument>) {}
+    constructor(@InjectModel(User.name) private model: Model<UserDocument>,
+                protected readonly rolesService: RoleService) {}
 
     public async findOneByName(name: string): Promise<User> {
         return await this.model.findOne({name}).populate('role').lean().exec();
@@ -28,8 +32,10 @@ export class UsersService {
             ...user,
             password: hash
         };
+        const defaultRole: Role = await this.rolesService.findOneByName(GlobalConstants.Roles.DEFAULT_ROLE);
         let dbresponse: User = await new this.model({
             ...user,
+            role: defaultRole,
             createdAt: new Date(),
             updatedAt: new Date()
         }).save();
