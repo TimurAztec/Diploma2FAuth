@@ -1,8 +1,9 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, useContext } from 'react';
 import { API } from '../../../api/axios';
 import { ErrorNotification } from '../../notifications';
 import { tr } from '../../../i18n';
 import PermissionsList from './permissions-list';
+import { GlobalContext } from '../../global-context';
 
 interface Role {
   _id: string;
@@ -12,6 +13,7 @@ interface Role {
 }
 
 function Roles() {
+    const {user} = useContext(GlobalContext);
     const [roles, setRoles] = useState<Role[]>([]);
     const [permissions, setPermissions] = useState<string[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -126,6 +128,7 @@ function Roles() {
         <ErrorNotification message={error} setMessage={setError}/>
         <section className="flex flex-wrap justify-between md:justify-center">
             <div className="flex-1 md:flex-0 m-2 justify-center">
+            {(user?.role?.permissions?.includes('create_roles') || editingRole) && (
             <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto">
                 <div className="mb-4">
                 <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
@@ -160,31 +163,40 @@ function Roles() {
                     />
                 </div>
                 {editingRole ? (
-                <div className="flex items-center justify-between">
-                    <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                    {tr('update')}
-                    </button>
-                    <button
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    onClick={handleNotEdit}
-                    >
-                    {tr('notupdate')}
-                    </button>
-                </div>
+                    <>
+                    {user?.role?.permissions?.includes('edit_roles') && (
+                    <div className="flex items-center justify-between">
+                        <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >
+                        {tr('update')}
+                        </button>
+                        <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        onClick={handleNotEdit}
+                        >
+                        {tr('notupdate')}
+                        </button>
+                    </div>
+                    )}
+                    </>
                 ) : (
-                <div className="flex items-center justify-between">
-                    <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                    {tr('create')}
-                    </button>
-                </div>
+                    <>
+                    {user?.role?.permissions?.includes('create_roles') && (
+                    <div className="flex items-center justify-between">
+                        <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >
+                        {tr('create')}
+                        </button>
+                    </div>
+                    )}
+                    </>
                 )}
             </form>
+            )}
             </div>
             <div className="flex-1 md:flex-0  m-2">
             {roles.map((role) => (
@@ -197,18 +209,22 @@ function Roles() {
                         </p>
                     </div>
                     <div className="flex justify-between">
+                        {user?.role?.permissions?.includes('edit_roles') && (
                         <button
                         onClick={() => handleEdit(role)}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
                         {tr('edit')}
                         </button>
+                        )}
+                        {user?.role?.permissions?.includes('delete_roles') && (
                         <button
                         onClick={() => handleRemove(role._id)}
                         className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                         >
                         {tr('remove')}
                         </button>
+                        )}
                     </div>
                 </div>
             ))}

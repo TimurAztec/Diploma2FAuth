@@ -217,7 +217,7 @@ function Clients() {
                                 {tr('edit')}
                                 </button>
                             )}
-                            {user?.role?.permissions?.includes('remove_clients') && (
+                            {user?.role?.permissions?.includes('delete_clients') && (
                                 <button onClick={() => handleRemove(item._id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
                                 {tr('remove')}
                                 </button>

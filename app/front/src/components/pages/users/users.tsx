@@ -75,7 +75,7 @@ function Users() {
                             <p className="text-gray-700 text-base mr-2">
                                 {tr('Role')}: <span className="font-bold">{item.role?.name}</span>
                             </p>
-                            {user?.role?.permissions?.includes('edit_users') && (
+                            {user?.role?.permissions?.includes('edit_staff') && (
                             <div className="relative inline-block text-left">
                                 <div>
                                     <button className="flex items-center justify-between w-full border border-gray-300 rounded-md shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="role-menu" aria-haspopup="true" aria-expanded={roleMenuOpenIndex == index ? "true" : "false"} onClick={() => handleRoleMenuClick(index)}>
@@ -104,7 +104,7 @@ function Users() {
                             </div>
                             )}
                         </div>
-                        {user?.role?.permissions?.includes('remove_users') && (
+                        {user?.role?.permissions?.includes('delete_staff') && (
                             <button onClick={() => handleRemove(item.id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
                                 {tr('remove')}
                             </button>
