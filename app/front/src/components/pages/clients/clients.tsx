@@ -1,10 +1,12 @@
-import {FormEvent, useEffect, useState} from "react";
+import {FormEvent, useContext, useEffect, useState} from "react";
 import { API } from "../../../api/axios";
 import CustomList from "../../props-list";
 import { ErrorNotification } from "../../notifications";
 import { tr } from "../../../i18n";
+import { GlobalContext } from "../../global-context";
 
 function Clients() {
+    const {user} = useContext(GlobalContext);
     const [items, setItems] = useState([]);
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState({
@@ -99,6 +101,7 @@ function Clients() {
         <main>
             <ErrorNotification message={error} setMessage={setError}/>
             <section className="flex flex-wrap justify-between md:justify-center">
+            {(user?.role?.permissions?.includes('create_clients') || editingItem) && (
             <div className="flex-1 md:flex-0 m-2 justify-center">
                 <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto">
                 <div className="mb-4">
@@ -155,32 +158,41 @@ function Clients() {
                     ></textarea>
                 </div>
                     {editingItem ? (
-                        <div className="flex items-center justify-between">
-                            <button
-                            type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                            {tr('update')}
-                            </button>
-                            <button
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            onClick={handleNotEdit}>
-                            {tr('notupdate')}
-                            </button>
-                        </div>
+                        <>
+                        {user?.role?.permissions?.includes('edit_clients') && (
+                            <div className="flex items-center justify-between">
+                                <button
+                                type="submit"
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                >
+                                {tr('update')}
+                                </button>
+                                <button
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                onClick={handleNotEdit}>
+                                {tr('notupdate')}
+                                </button>
+                            </div>
+                        )}
+                        </>
                     ) : (
-                        <div className="flex items-center justify-between">
-                            <button
-                            type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            >
-                            {tr('create')}
-                            </button>
-                        </div>
+                        <>
+                        {user?.role?.permissions?.includes('create_clients') && (
+                            <div className="flex items-center justify-between">
+                                <button
+                                type="submit"
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                >
+                                {tr('create')}
+                                </button>
+                            </div>
+                        )}
+                        </>
                     ) 
                     }
                 </form>
             </div>
+            )}
             <div className="flex-1 md:flex-0  m-2">
                 <CustomList items={items} renderItem={(item, index) => 
                     <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
@@ -200,12 +212,16 @@ function Clients() {
                             </div>
                         </div>
                         <div className="flex justify-between mt-2">
-                            <button onClick={() => handleEdit(item)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            {tr('edit')}
-                            </button>
-                            <button onClick={() => handleRemove(item._id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                            {tr('remove')}
-                            </button>
+                            {user?.role?.permissions?.includes('edit_clients') && (
+                                <button onClick={() => handleEdit(item)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                {tr('edit')}
+                                </button>
+                            )}
+                            {user?.role?.permissions?.includes('remove_clients') && (
+                                <button onClick={() => handleRemove(item._id)} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                                {tr('remove')}
+                                </button>
+                            )}
                         </div>
                     </div>
                 }/>

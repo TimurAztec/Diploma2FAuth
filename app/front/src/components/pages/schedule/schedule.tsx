@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Calendar, Views, momentLocalizer, Event } from "react-big-calendar";
 import moment from "moment";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { API } from "../../../api/axios";
 import { ErrorNotification } from "../../notifications";
 import DatePicker from "react-datepicker";
 import { tr } from "../../../i18n";
+import { GlobalContext } from "../../global-context";
 
 export interface CustomEvent {
   allDay?: boolean | undefined;
@@ -19,6 +20,7 @@ export interface CustomEvent {
 }
 
 function Schedule() {
+  const {user} = useContext(GlobalContext);
   const [events, setEvents] = useState<CustomEvent[] | undefined>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<CustomEvent | null>(null);
@@ -158,17 +160,27 @@ function Schedule() {
                 <div className="col-span-2">
                 {selectedEvent ? (
                   <>
-                  <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">{tr('update')}</button>
-                  <button
-                    className="w-full text-white rounded-md px-4 py-2 mt-4 focus:outline-none focus:bg-indigo-600 bg-red-600 hover:bg-red-700"
-                    onClick={() => {setSelectedEvent(null)}}>
-                    {tr('notupdate')}
-                  </button>
+                  {user?.role?.permissions?.includes('edit_schedule') && (
+                  <>
+                    <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">{tr('update')}</button>
+                    <button
+                      className="w-full text-white rounded-md px-4 py-2 mt-4 focus:outline-none focus:bg-indigo-600 bg-red-600 hover:bg-red-700"
+                      onClick={() => {setSelectedEvent(null)}}>
+                      {tr('notupdate')}
+                    </button>
+                  </>
+                  )}
                   </>
                 ) : (
+                  <>
+                  {user?.role?.permissions?.includes('create_schedule') && (
                   <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">{tr('create')}</button>
+                  )}
+                  </>
                 )}
+                {(user?.role?.permissions?.includes('delete_schedule') && selectedEvent) && (
                   <button type="button" className="w-full bg-red-600 text-white rounded-md px-4 mt-4 py-2 hover:bg-red-700 focus:outline-none focus:bg-indigo-600" onClick={handleDeleteEvent}>{tr('remove')}</button>
+                )}
                 </div>
               </form>
           </section>
