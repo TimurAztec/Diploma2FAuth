@@ -46,6 +46,8 @@ export class UsersService {
         const user = await this.model.findById(newUser._id).exec();
         user.name = newUser.name;
         user.email = newUser.email;
+        user.phone = newUser.phone;
+        user.description = newUser.description;
         user.password = newUser.password;
         user.role = newUser.role;
         user.twofasecret = newUser.twofasecret;

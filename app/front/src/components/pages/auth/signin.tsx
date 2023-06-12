@@ -57,7 +57,7 @@ function Signin() {
             setError(null);
             navigate("/d/schedule");
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 

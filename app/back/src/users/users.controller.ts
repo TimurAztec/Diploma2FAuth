@@ -39,8 +39,10 @@ export class UsersController {
             const users: ReturnUser[] = [];
             response.forEach((user: User) => {
                 users.push({
-                    id: user._id,
+                    _id: user._id,
                     email: user.email,
+                    phone: user.phone,
+                    description: user.description,
                     name: user.name,
                     role: user.role
                 })
@@ -84,7 +86,7 @@ export class UsersController {
     public async modify(@Req() req, @Res() res, @Body() updateUserDto: UpdateUserDto) {
         try {
             const userRolePriority: number = req?.user?.role?.priority;
-            const user = await this.userService.findOne(new Types.ObjectId(updateUserDto.id));
+            const user = await this.userService.findOne(new Types.ObjectId(updateUserDto._id));
             if (userRolePriority <= user?.role?.priority) {
                 throw new BadRequestException('Not enough privilages to edit this!');
             }
@@ -93,6 +95,8 @@ export class UsersController {
             // }
             user.email = updateUserDto.email;
             user.name = updateUserDto.name;
+            user.phone = updateUserDto.phone;
+            user.description = updateUserDto.description;
             user.role = await this.roleService.findOne(new Types.ObjectId(updateUserDto.role));
             // if (Array.from(GlobalConstants.Roles.ROLES_VALUES.keys()).includes(updateUserDto.role.name)) {
             //     user.role = updateUserDto.role;

@@ -31,21 +31,21 @@ function Roles() {
 
     const fetchRoles = async () => {
         try {
-        const response = await API.get('/roles');
-        setRoles(response.data);
-        setError(null);
+            const response = await API.get('/roles');
+            setRoles(response.data);
+            setError(null);
         } catch (error) {
-        setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 
     const fetchPermissions = async () => {
         try {
-          const response = await API.get('/permissions');
-          setPermissions(response.data);
-          setError(null);
+            const response = await API.get('/permissions');
+            setPermissions(response.data);
+            setError(null);
         } catch (error) {
-          setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 
@@ -91,7 +91,7 @@ function Roles() {
         fetchRoles();
         setError(null);
         } catch (error) {
-        setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 
@@ -101,7 +101,7 @@ function Roles() {
         fetchRoles();
         setError(null);
         } catch (error) {
-        setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 

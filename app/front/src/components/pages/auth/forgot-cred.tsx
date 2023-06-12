@@ -27,7 +27,7 @@ function ForgotCred({credential}: {credential: string}) {
             setError(null);
             setMessage(`${credential} resset link been sent to your email` as any);
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 

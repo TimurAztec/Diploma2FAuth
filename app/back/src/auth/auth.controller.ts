@@ -27,8 +27,10 @@ export class AuthController {
         try {
             const response = await this.authService.authenticate(authDto);
             const returnUser: ReturnUser = {
-                id: response.user._id,
+                _id: response.user._id,
                 email: response.user.email,
+                phone: response.user.phone,
+                description: response.user.description,
                 name: response.user.name,
                 role: response.user.role
             };

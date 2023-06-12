@@ -55,7 +55,7 @@ function Clients() {
             });
             setError(null);
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 
@@ -67,7 +67,7 @@ function Clients() {
             });
             setError(null);
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 

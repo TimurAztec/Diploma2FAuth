@@ -51,7 +51,7 @@ function Header(props: any) {
                 onClick={() => changeLanguage('en')}
                 title="English"
                 >
-                🇺🇸
+                🇬🇧
                 </button>
                 <button
                 className="language-button bg-transparent border-none text-2xl focus:outline-none transform transition hover:scale-110"

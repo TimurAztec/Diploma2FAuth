@@ -10,6 +10,7 @@ function Signup() {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
+        phone: "",
         password: "",
     });
     const [error, setError] = useState(null);
@@ -28,12 +29,13 @@ function Signup() {
             setFormData({
                 name: "",
                 email: "",
+                phone: "",
                 password: "",
             });
             setError(null);
             navigate("/resetToken", {state: {tokenUrl}});
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 
@@ -59,6 +61,10 @@ function Signup() {
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{tr('your')} email</label>
                                     <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@domain.com" value={formData.email} onChange={handleInputChange} required={true}/>
+                                </div>
+                                <div>
+                                    <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{tr('your')} {tr('phone')}</label>
+                                    <input type="phone" name="phone" id="phone" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={formData.phone} onChange={handleInputChange} required={true}/>
                                 </div>
                                 <div>
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{tr('new')} {tr('password')}</label>

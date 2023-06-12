@@ -35,7 +35,7 @@ function ResetPassword() {
             setError(null);
             navigate("/d/home");
         } catch (error) {
-            setError(error.response.data.message);
+            setError(error.response.data.message || JSON.stringify(error.response.data));
         }
     };
 

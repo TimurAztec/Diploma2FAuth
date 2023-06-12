@@ -10,6 +10,10 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString()
+    readonly phone: string;
+
+    @IsNotEmpty()
+    @IsString()
     readonly name: string;
 
     @IsNotEmpty()
@@ -20,11 +24,17 @@ export class CreateUserDto {
 export class UpdateUserDto {
     @IsNotEmpty()
     @IsString()
-    readonly id: Types.ObjectId;
+    readonly _id: Types.ObjectId;
 
     @IsNotEmpty()
     @IsString()
     readonly email: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly phone: string;
+
+    readonly description: string;
 
     @IsNotEmpty()
     @IsString()
@@ -36,8 +46,10 @@ export class UpdateUserDto {
 }
 
 export interface ReturnUser {
-    readonly id: Types.ObjectId;
+    readonly _id: Types.ObjectId;
     readonly email: string;
+    readonly phone: string;
+    readonly description: string;
     readonly name: string;
     readonly role: Role;
 }

@@ -16,6 +16,12 @@ export class User {
   email: string;
 
   @Prop({required: true})
+  phone: string;
+
+  @Prop()
+  description: string;
+
+  @Prop({required: true})
   password: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Role', required: true })
