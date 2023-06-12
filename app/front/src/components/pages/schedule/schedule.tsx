@@ -26,8 +26,8 @@ function Schedule() {
   const [selectedEvent, setSelectedEvent] = useState<CustomEvent | null>(null);
   const [formData, setFormData] = useState({
     title: '',
-    start: new Date(),
-    end: new Date(),
+    start: null,
+    end: null,
     location: '',
     description: ''
   });
@@ -53,13 +53,7 @@ function Schedule() {
         await API.post('/events', formData);
       }
       fetchEvents();
-      setFormData({
-        title: '',
-        start: new Date(),
-        end: new Date(),
-        location: '',
-        description: ''
-      });
+      resetFormData();
       setError(null);
       setSelectedEvent(null);
     } catch (error) {
@@ -83,12 +77,12 @@ function Schedule() {
     const { start = new Date(), end = new Date(), title, location, description } = event;
     setFormData({
       title: typeof title === 'string' ? title : '',
-      start: start instanceof Date ? start : new Date(),
-      end: end instanceof Date ? end : new Date(),
+      start: start instanceof Date ? start : null,
+      end: end instanceof Date ? end : null,
       location: location || '',
       description: description || ''
     });
-  };  
+  };
 
   const fetchEvents = () => {
     API.get('/events').then((response: any) => {
@@ -103,6 +97,16 @@ function Schedule() {
       }
     });
   };
+
+  const resetFormData = () => {
+    setFormData({
+      title: '',
+      start: null,
+      end: null,
+      location: '',
+      description: ''
+    });
+  }
 
   return (
       <main>
@@ -165,7 +169,7 @@ function Schedule() {
                     <button type="submit" className="w-full bg-primary-600 text-white rounded-md px-4 py-2 hover:bg-primary-700 focus:outline-none focus:bg-indigo-600">{tr('update')}</button>
                     <button
                       className="w-full text-white rounded-md px-4 py-2 mt-4 focus:outline-none focus:bg-indigo-600 bg-red-600 hover:bg-red-700"
-                      onClick={() => {setSelectedEvent(null)}}>
+                      onClick={() => {setSelectedEvent(null); resetFormData();}}>
                       {tr('notupdate')}
                     </button>
                   </>

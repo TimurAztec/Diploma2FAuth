@@ -77,19 +77,19 @@ function Roles() {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-        if (editingRole) {
-            await API.put(`/roles/modify`, {id: editingRole._id, ...formData});
-            setEditingRole(null);
-        } else {
-            await API.post('/roles', formData);
-        }
-        setFormData({
-            name: '',
-            permissions: [],
-            priority: 1
-        });
-        fetchRoles();
-        setError(null);
+            if (editingRole) {
+                await API.put(`/roles/modify`, {...formData, id: editingRole._id, priority: formData.priority.toString()});
+                setEditingRole(null);
+            } else {
+                await API.post('/roles', {...formData, priority: formData.priority.toString()});
+            }
+            setFormData({
+                name: '',
+                permissions: [],
+                priority: 1
+            });
+            fetchRoles();
+            setError(null);
         } catch (error) {
             setError(error.response.data.message || JSON.stringify(error.response.data));
         }
