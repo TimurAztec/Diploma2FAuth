@@ -33,7 +33,7 @@ function ResetPassword() {
                 confirmPassword: ""
             });
             setError(null);
-            navigate("/d/home");
+            navigate("/d/schedule");
         } catch (error) {
             setError(error.response.data.message || JSON.stringify(error.response.data));
         }
